@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace T3_E2
 {
@@ -36,7 +37,7 @@ namespace T3_E2
                 }
             }
             // Manejo de errores de formato, en caso se ponga un valor que no pueda ser convertido a INT.
-            catch(FormatException)
+            catch (FormatException)
             {
                 // Output indicando el error encontrado.
                 txtb_Output.Text = "FormatException: Por favor ingrese un valor válido.";
@@ -46,7 +47,7 @@ namespace T3_E2
                 // Se borra el número introducido en el textbox.
                 txtb_Num.Text = string.Empty;
             }
-            
+
         }
 
         // Botón de ordenamiento ascendente
@@ -86,7 +87,75 @@ namespace T3_E2
             {
                 txtb_Output.Text = "Error: Se necesita más elementos.";
             }
-                
+
+        }
+
+        // Búsqueda.
+        private void btn_Buscar_Click(object sender, EventArgs e)
+        {
+            // Vamos a implementar un errorHandling, ya que puede intentar buscare valores no numéricos.
+            try
+            {
+                // Busca el índice del número introducido.
+                int index = o_numList.FindIndex(num => num == int.Parse(txtb_Buscar.Text));
+                // Si no se encuentra, devuelve un error en el output.
+                if (index < 0)
+                {
+                    txtb_Output.Text = "Error: No se encontró el elemento.";
+                }
+                else
+                {
+                    // Si lo encontramos, devolvemos el index.
+                    txtb_Output.Text = String.Format("OK: El elemento se encuentra en la posición {0}.", index);
+                }
+
+            }
+            catch (FormatException)
+            {
+                // Output indicando el error encontrado.
+                txtb_Output.Text = "FormatException: Por favor ingrese un valor válido.";
+            }
+            finally
+            {
+                // Se limpiar el valor de la búsqueda.
+                txtb_Buscar.Text = string.Empty;
+            }
+        }
+
+        // Eliminar elementos.
+        private void btn_Eliminar_Click(object sender, EventArgs e)
+        {
+            // Se busca el elemento. Se evitar errores con TRY. CATCH
+            try
+            {
+                // convertimos el texto del textbox a INT para evaluar.
+                int Num_to_Delete = int.Parse(txtb_Eliminar.Text);
+                // Tratamos de eliminar el número. Si se elimina. devuelve true.
+                if (o_numList.Remove(Num_to_Delete))
+                {
+                    // Reporta la correcta eliminación en el output.
+                    txtb_Output.Text = string.Format("OK: Se eliminó el número {0}.", Num_to_Delete);
+                    // Actualiza la lista.
+                    string listContents = string.Join(", ", o_numList).Trim(' ').Trim(',');
+                    // Actualizamos el textbox donde se muestra la lista.
+                    txtb_NumList.Text = listContents;
+                }
+                else
+                {
+                    // Informa que no se encontró dicho número.
+                    txtb_Output.Text = string.Format("Error: No se encontró {0}. Entonces, no se eliminó.", Num_to_Delete);
+                }
+
+            }
+            // Error handling.
+            catch (FormatException)
+            {
+                txtb_Output.Text = "FormatException: Por favor ingrese un valor válido.";
+            }
+            finally
+            {
+                txtb_Eliminar.Text = string.Empty;
+            }
         }
     }
 }

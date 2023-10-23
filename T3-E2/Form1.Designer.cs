@@ -106,6 +106,7 @@
             btn_Buscar.TabIndex = 7;
             btn_Buscar.Text = "Buscar";
             btn_Buscar.UseVisualStyleBackColor = true;
+            btn_Buscar.Click += btn_Buscar_Click;
             // 
             // btn_Eliminar
             // 
@@ -115,6 +116,7 @@
             btn_Eliminar.TabIndex = 8;
             btn_Eliminar.Text = "Eliminar";
             btn_Eliminar.UseVisualStyleBackColor = true;
+            btn_Eliminar.Click += btn_Eliminar_Click;
             // 
             // txtb_Buscar
             // 
